@@ -1,0 +1,46 @@
+function generateRandomString(length) {
+    const allowedChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+-_$~';
+    let result = '';
+
+    while (result.length < length) {
+        const randomIndex = Math.floor(Math.random() * allowedChars.length);
+        const char = allowedChars[randomIndex];
+        
+        if (char !== 'C' && char !== 'P' && char !== 'S' && char !== 'X') {
+            result += char;
+        }
+    }
+
+    return result;
+}
+
+function replaceCharacters(str, firstChar, secondChar) {
+    let newStr = '';
+    for (let char of str) {
+        if ((char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')) {
+            newStr += firstChar;
+        } else if (char >= '0' && char <= '9') {
+            newStr += secondChar;
+        } else {
+            newStr += char;
+        }
+    }
+    return newStr;
+}
+
+const N = parseInt(prompt("Введите длину строки N:"));
+let randomString = generateRandomString(N);
+console.log("Сгенерированная строка:", randomString);
+
+const firstChar = prompt("Введите символ для замены всех букв:");
+const secondChar = prompt("Введите символ для замены цифр:");
+let finalString = replaceCharacters(randomString, firstChar, secondChar);
+
+const countFirstChar = finalString.split('').filter(c => c === firstChar).length;
+const countSecondChar = finalString.split('').filter(c => c === secondChar).length;
+const countOthers = finalString.length - (countFirstChar + countSecondChar);
+
+console.log("Итоговая строка:", finalString);
+console.log("Количество повторов первого символа:", countFirstChar);
+console.log("Количество повторов второго символа:", countSecondChar);
+console.log("Количество символов, которые не были заменены:", countOthers);
